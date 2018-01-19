@@ -1,0 +1,85 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+{% block main%}
+  <div class="row main wallet">
+      <div class="col s12 m12 l12">
+          <div class="row bread">
+            <div class="col s12 m12 l12 breadcrumbs">
+              <div><span class="fa fa-folder"> </span> My Wallet</div>
+            </div>
+          </div>
+          {% if data %}
+          <div class="row">
+              <div class="col s12 m12 l10">
+                <div class="info">
+                  <p>{{ data }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="row">
+              <div class="col s12 m12 l10 wallet">
+                  <div class="btcard">
+                      <h4>Your Current Mobile Money Number</h4>
+                      <div class="btcard-content">
+                          {% if momo %}
+                            {% for mm in momo  %}
+                                <h5 >{{ mm.momo_number }}</h5>
+                            {% endfor %}
+                            {% else %}
+                            <h5 >You have not stored your wallet address yet </h5>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="btcard">
+                        <h4>Mobile Money Name</h4>
+                        <div class="btcard-content">
+                            {% if momo %}
+                              {% for mm in momo  %}
+                                  <h5 >{{ mm.momo_name }}</h5>
+                              {% endfor %}
+                            {% else %}
+                              <h5 >You have not stored your wallet address yet </h5>
+                            {% endif %}
+                        </div>
+                    </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col s12 m12 l10 wallet">
+                  <div class="btcard">
+                      <h4>Use this form to change wallet address</h4>
+                      <div class="btcard-content">
+                          <div class="row">
+                              <div class=" col s12 m12 l9 form">
+                                {% if msg %}
+                                <div class="danger">
+                                  <p>{{ msg }}</p>
+                                </div>
+                                {% endif %}
+                              <form class="" action="" method="post">{% csrf_token %}
+                                <div class="inp">
+                                    <label for="auth">Enter your Password</label>
+                                    <input id="auth" type="password" name="password"  placeholder="Enter your password">
+                                </div>
+                                <div class="inp">
+                                    <label for="pro">Mobile Money Number</label>
+                                    <input type="text" id="pro" name="number" placeholder="telephone">
+                                </div>
+                                <div class="inp">
+                                        <label for="pro">Mobile Money Name</label>
+                                        <input type="text" id="pro" name="name" placeholder="name">
+                                    </div>
+                                <div class="pass-btn"><input class="button" type="submit" value="save"></div>
+                              </form>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+{% endblock %}

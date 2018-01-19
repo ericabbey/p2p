@@ -1,0 +1,131 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+{% load query %}
+{% block main%}
+  <div class="row main wallet">
+      <div class="col s12 m12 l12">
+          <div class="row bread">
+            <div class="col s12 m12 l12 breadcrumbs">
+              <div><span class="fa fa-line-chart"> </span> Donation Statistics</div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col s12">
+                <ul class="tabs">
+                  <li class="tab col s3"><a class="active" href="#test1">Sending</a></li>
+                  <li class="tab col s3"><a href="#test2">Receiving</a></li>
+                  <li class="tab col s3 "><a href="#test3">Missed</a></li>
+                </ul>
+              </div>
+              <div id="test1" class="col s12">
+                  <div class="btcard">
+                      <h4>Donations Sent</h4>
+                      <div class="btcard-content">
+                          <div class="table">
+                              <div class="search-input col s12 m12 l9">
+                                  <input type="text" id="serach" placeholder="who do you want?">
+                                  <label for="search"><span class="fa fa-search"></span></label>
+                              </div>
+                              <table>
+                                  <tr>
+                                      <th>Level</th>
+                                      <th>Upliner</th>
+                                      <th>Time sent</th>
+                                      <th>Amount</th>
+                                      <th>state</th>
+                                  </tr>
+                                  {% query trans user=request.user as receiving %}
+                                  {% for r in receiving  %}
+                                  <tr>
+                                      <td>{{ r.to.dashboard.level }}</td>
+                                      <td>{{ r.to }}</td>
+                                      <td>{{ r.timestamp }}</td>
+                                      <td>Ghc {{r.amount}}</td>
+                                      <td>
+                                        {% if r.state == 'confirmed' %} 
+                                        <span class="green-text text-darken-2">Confirmed</span>
+                                        {%else%} 
+                                        <span class="brown-text text-lighten-1">Pending</span> 
+                                        {% endif %}
+                                    </td>
+                                  </tr>
+                                  {% endfor %}
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div id="test2" class="col s12">
+                 <div class="btcard">
+                      <h4>Donations Received</h4>
+                      <div class="btcard-content">
+                          <div class="table">
+                              <div class="search-input col s12 m12 l9">
+                                  <input type="text" id="serach" placeholder="who do you want?">
+                                  <label for="search"><span class="fa fa-search"></span></label>
+                              </div>
+                              <table>
+                                  <tr>
+                                      <th>Level</th>
+                                      <th>Downliner</th>
+                                      <th>Date</th>
+                                      <th>Amount</th>
+                                      <th></th>
+                                  </tr>
+                                  {% query trans to=request.user as receiving %}
+                                  {% for r in receiving  %}
+                                  <tr>
+                                      <td>{{ r.to.dashboard.level }}</td>
+                                      <td>{{ r.to }}</td>
+                                      <td>{{ r.timestamp }}</td>
+                                      <td>Ghc {{r.amount}}</td>
+                                      <td>
+                                        {% if r.state == 'confirmed' %} 
+                                        <span class="green-text text-darken-2">Received</span>
+                                        {%else%} 
+                                        <div class="btn btn-primary trans_confirm" data-ref="{{r.id}}">Confirm</span> 
+                                        {% endif %}
+                                      </td>
+                                  </tr>
+                                  {% endfor %}
+                              </table>
+                          </div>
+                      </div>
+                </div>
+                </div>
+              <div id="test3" class="col s12">
+                 <div class="btcard">
+                      <h4>Missed donatons</h4>
+                      <div class="btcard-content">
+                        <div class="info">
+                          <p>No donations are missed your are a pro</p>
+                        </div>
+                          <div class="table">
+                              <div class="search-input col s12 m12 l9">
+                                  <input type="text" id="serach" placeholder="who do you want?">
+                                  <label for="search"><span class="fa fa-search"></span></label>
+                              </div>
+                              <table>
+                                  <tr>
+                                      <th>From</th>
+                                      <th>Went To</th>
+                                      <th>Time sent</th>
+                                      <th>Sponsor</th>
+                                  </tr>
+                                  {% for m in missed %}
+                                  <tr>
+                                      <td><a href="">{{ m.user }}</a></td>
+                                      <td>{{ m.missed_to }}</td>
+                                      <td>{{ m.timestamp }}</td>
+                                      <td><a href="">Ray Nana</a></td>
+                                  </tr>
+                                  {% endfor %}
+                              </table>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
