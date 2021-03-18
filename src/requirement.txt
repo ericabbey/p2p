@@ -8,7 +8,7 @@ forex-python==0.3.2
 idna==2.6
 kombu==4.1.0
 olefile==0.44
-Pillow==4.2.1
+Pillow==8.1.1
 pprintpp==0.3.0
 pycountry==17.5.14
 pycountry-convert==0.2.2
